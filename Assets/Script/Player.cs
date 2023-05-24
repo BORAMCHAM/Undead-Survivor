@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 // MonoBeHaviour : 게임 로직 구성에 필요한 것들을 가진 클래스
 public class Player : MonoBehaviour 
@@ -24,20 +25,6 @@ public class Player : MonoBehaviour
         
     }
 
-    // Update : 하나의 프레임마다 한 번씩 호출되는 생명주기 함수
-    void Update()
-    {
-        // Input ; 유니티에서 받는 모든 입력을 관리하는 클래스
-        // Input.GetAxis : 입력 값이 부드럽게 바뀜
-        // Input.GetAxisRaw : 더욱 명확한 컨트롤 구현 가능
-        inputVec.x = Input.GetAxisRaw("Horizontal");
-        inputVec.y = Input.GetAxisRaw("Vertical");
-        /*
-        Edit > Project Settinigs > Input Manager 에서 버튼 이름 확인
-        Input Manager : 물리적인 입력을 지정된 버튼으로 연결하는 역할
-      */
-    }
-
     // FixedUpdate : 물리 연산 프레임마다 호출되는 생명주기 함수
     void FixedUpdate()
     {
@@ -55,11 +42,17 @@ public class Player : MonoBehaviour
         // 다른 프레임 환경에도 이동거리는 같아야 함
         // normalized : 벡터 값의 크기가 1이 되도록 좌표가 수정된 값
         // fixedDeltaTime : 물리 프레임 하나가 소비하는 시간
-        Vector2 nextVec = inputVec.normalized * speed * Time.fixedDeltaTime;
+        Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
 
         // 물리이동 중 위치이동
         // MovePosition은 위치이동이라 현재 위치(rigid.position)도 더해주어야 함
         // 위에서 계산된 변수(nextVec)를 MovePosition에 사용
         rigid.MovePosition(rigid.position + nextVec);  
+    }
+
+    void OnMove(InputValue value)
+    {
+        // Get<T> : 프로필에서 설정한 컨트롤 타입 T값을 가져오는 함수
+        inputVec = value.Get<Vector2>();
     }
 }
