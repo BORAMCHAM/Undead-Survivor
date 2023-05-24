@@ -11,18 +11,16 @@ public class Player : MonoBehaviour
     public float speed;     // 속도를 편리하게 관리하는 float 변수
 
     Rigidbody2D rigid;  // GameObject의  Rigidbody 2D를 저장할 변수 선언
+    SpriteRenderer spriter;  // SpriteRenderer 변수 선언
+    Animator anim;  // Animator 변수 선언
 
-    // Awake : 시작할 때 한번만 실행되는 생명주기 함수 (초기화 하는 함수)
+    // Awake : 시작할 때 한번만 실행되는 생명주기 함수 (선언한 변수를 초기화 하는 곳)
     void Awake()
     {
         // GetComponent<T> : GameObject에서 Component를 가져오는 함수 → T자리에는 Component 이름 작성
         rigid = GetComponent<Rigidbody2D>();    // rigid 변수에 Player에 있는 Component 중 Rigidbody 2D 저장
-    }
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+        spriter = GetComponent<SpriteRenderer>();
+        anim = GetComponent<Animator>();
     }
 
     // FixedUpdate : 물리 연산 프레임마다 호출되는 생명주기 함수
@@ -54,5 +52,20 @@ public class Player : MonoBehaviour
     {
         // Get<T> : 프로필에서 설정한 컨트롤 타입 T값을 가져오는 함수
         inputVec = value.Get<Vector2>();
+    }
+
+    // LateUpdate : 프레임이 종료 되기 전 실행되는 생명주기 함수
+    void LateUpdate()
+    {
+        // 애니메이터에서 설정한 파라메터 타입과 동일한 함수 작성
+        // SetFloat 첫번째 인자 : 파라메터 이름, SetFloat 두번째 인자 : 반영할 float 값
+        anim.SetFloat("Speed", inputVec.magnitude);  // Magnitude : 벡터의 순수한 크기 값
+
+        // if : 조건이 true일 때, 자신의 코드를 실행하는 키워드
+        if (inputVec.x != 0)    // != : '왼쪽과 오른쪽이 서로 다릅니까?' 의미의 비교 연산자
+        {
+            // if문 안에 flipX 속성 바꾸기
+            spriter.flipX = inputVec.x < 0;    // 비교 연산자의 결과를 바로 넣을 수 있음
+        }
     }
 }
