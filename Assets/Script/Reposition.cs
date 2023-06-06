@@ -27,7 +27,7 @@ public class Reposition : MonoBehaviour
         // 대각선일 때는 Normalized에 의해 1보다 작은 값이 되어버림
         // 3항 연산자 : (조건) ? (true일 때 값) : (false일 때 값)
         float dirX = playerDir.x < 0 ? -1 : 1;
-        float dirY = playerDir.x < 0 ? -1 : 1;
+        float dirY = playerDir.y < 0 ? -1 : 1;
 
         // switch - case : 값의 산태에 따라 로직을 나눠주는 키워드
         switch (transform.tag)
