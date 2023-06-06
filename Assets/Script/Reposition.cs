@@ -4,6 +4,15 @@ using UnityEngine;
 
 public class Reposition : MonoBehaviour
 {
+    // Collider2D 변수 생성 및 초기화
+    Collider2D coll;
+
+    void Awake()
+    {
+        // Collider2D는 기본 도형의 모든 콜라이더2D를 포함
+        coll = GetComponent<Collider2D>();
+    }
+
     // OnTriggerExit2D : Trigger와 체크된 Collider에서 나갔을 때 발생하는 함수
     void OnTriggerExit2D(Collider2D collision)
     {
@@ -49,8 +58,15 @@ public class Reposition : MonoBehaviour
                 break;
 
             case "Enemy":
-
+                // 콜라이더가 활성화 되어있는지 조건 먼저 작성
+                if(coll.enabled)
+                {
+                    // Player의 이동 방향에 따라 맞은 편에서 등장하도록 이동
+                    // 랜덤한 위치에서 등장하도록 벡터 더하기
+                    transform.Translate(playerDir * 20 + new Vector3(Random.Range(-3f, 3f), Random.Range(-3f, 3f), 0f));
+                }
                 break;
         }
     }
 }
+
