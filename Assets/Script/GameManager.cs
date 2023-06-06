@@ -1,20 +1,20 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class GameManager : MonoBehaviour
 {
     /* static
-        - Á¤ÀúÀ¸·Î »ç¿ëÇÏ°Ú´Ù´Â Å°¿öµå (¹Ù·Î ¸Ş¸ğ¸®¿¡ ¾ñ¾î¹ö¸²)
-        - staticÀ¸·Î ¼±¾ğµÈ º¯¼ö´Â Inspector¿¡ ³ªÅ¸³ªÁö ¾ÊÀ½
-        - Á¤Àû(static) º¯¼ö´Â Áï½Ã Å¬·¡½º¿¡¼­ ºÎ¸¦ ¼ö ÀÖ´Ù´Â Æí¸®ÇÔÀÌ ÀÖÀ½
+        - ì •ì €ìœ¼ë¡œ ì‚¬ìš©í•˜ê² ë‹¤ëŠ” í‚¤ì›Œë“œ (ë°”ë¡œ ë©”ëª¨ë¦¬ì— ì–¹ì–´ë²„ë¦¼)
+        - staticìœ¼ë¡œ ì„ ì–¸ëœ ë³€ìˆ˜ëŠ” Inspectorì— ë‚˜íƒ€ë‚˜ì§€ ì•ŠìŒ
+        - ì •ì (static) ë³€ìˆ˜ëŠ” ì¦‰ì‹œ í´ë˜ìŠ¤ì—ì„œ ë¶€ë¥¼ ìˆ˜ ìˆë‹¤ëŠ” í¸ë¦¬í•¨ì´ ìˆìŒ
     */
     public static GameManager instance;
-    public Player player;   // Player Å¸ÀÔÀÇ °ø°³ º¯¼ö ¼±¾ğ
+    public Player player;   // Player íƒ€ì…ì˜ ê³µê°œ ë³€ìˆ˜ ì„ ì–¸
 
     void Awake()
     {
-        // Awake »ı¸íÁÖ±â¿¡¼­ Instance º¯¼ö¸¦ ÀÚ±âÀÚ½Å this·Î ÃÊ±âÈ­
+        // Awake ìƒëª…ì£¼ê¸°ì—ì„œ Instance ë³€ìˆ˜ë¥¼ ìê¸°ìì‹  thisë¡œ ì´ˆê¸°í™”
         instance = this;
     }
 }

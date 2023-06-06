@@ -1,46 +1,46 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class Reposition : MonoBehaviour
 {
-    // OnTriggerExit2D : Trigger¿Í Ã¼Å©µÈ Collider¿¡¼­ ³ª°¬À» ¶§ ¹ß»ıÇÏ´Â ÇÔ¼ö
+    // OnTriggerExit2D : Triggerì™€ ì²´í¬ëœ Colliderì—ì„œ ë‚˜ê°”ì„ ë•Œ ë°œìƒí•˜ëŠ” í•¨ìˆ˜
     void OnTriggerExit2D(Collider2D collision)
     {
-        // OnTriggerExit2DÀÇ ¸Å°³º¯¼ö(collision)°ú »ó´ë¹æ ColliderÀÇ Tag¸¦ Á¶°ÇÀ¸·Î
+        // OnTriggerExit2Dì˜ ë§¤ê°œë³€ìˆ˜(collision)ê³¼ ìƒëŒ€ë°© Colliderì˜ Tagë¥¼ ì¡°ê±´ìœ¼ë¡œ
         if (!collision.CompareTag("Area"))
-            // return Å°¿öµå¸¦ ¸¸³ª¸é ´õ ÀÌ»ó ½ÇÇàÇÏÁö ¾Ê°í ÇÔ¼ö Å»Ãâ
+            // return í‚¤ì›Œë“œë¥¼ ë§Œë‚˜ë©´ ë” ì´ìƒ ì‹¤í–‰í•˜ì§€ ì•Šê³  í•¨ìˆ˜ íƒˆì¶œ
             return;
 
-        // °Å¸®¸¦ ±¸ÇÏ±â À§ÇØ Player À§Ä¡¿Í Tilemap À§Ä¡¸¦ ¹Ì¸® ÀúÀå
+        // ê±°ë¦¬ë¥¼ êµ¬í•˜ê¸° ìœ„í•´ Player ìœ„ì¹˜ì™€ Tilemap ìœ„ì¹˜ë¥¼ ë¯¸ë¦¬ ì €ì¥
         Vector3 playerPos = GameManager.instance.player.transform.position;
         Vector3 myPos = transform.position;
 
-        // Player À§Ä¡ - Tilemap À§Ä¡ °è»êÀ¸·Î °Å¸® ±¸ÇÏ±â
-        // Mathf.Abs : À½¼öµµ ¾ç¼ö·Î ¸¸µé¾îÁÖ´Â Àı´ë°ª ÇÔ¼ö
+        // Player ìœ„ì¹˜ - Tilemap ìœ„ì¹˜ ê³„ì‚°ìœ¼ë¡œ ê±°ë¦¬ êµ¬í•˜ê¸°
+        // Mathf.Abs : ìŒìˆ˜ë„ ì–‘ìˆ˜ë¡œ ë§Œë“¤ì–´ì£¼ëŠ” ì ˆëŒ€ê°’ í•¨ìˆ˜
         float diffX = Mathf.Abs(playerPos.x - myPos.x);
         float diffY = Mathf.Abs(playerPos.y - myPos.y);
 
-        // PlayerÀÇ ÀÌµ¿ ¹æÇâÀ» ÀúÀåÇÏ±â À§ÇÑ º¯¼ö Ãß°¡
+        // Playerì˜ ì´ë™ ë°©í–¥ì„ ì €ì¥í•˜ê¸° ìœ„í•œ ë³€ìˆ˜ ì¶”ê°€
         Vector3 playerDir = GameManager.instance.player.inputVec;
 
-        // ´ë°¢¼±ÀÏ ¶§´Â Normalized¿¡ ÀÇÇØ 1º¸´Ù ÀÛÀº °ªÀÌ µÇ¾î¹ö¸²
-        // 3Ç× ¿¬»êÀÚ : (Á¶°Ç) ? (trueÀÏ ¶§ °ª) : (falseÀÏ ¶§ °ª)
+        // ëŒ€ê°ì„ ì¼ ë•ŒëŠ” Normalizedì— ì˜í•´ 1ë³´ë‹¤ ì‘ì€ ê°’ì´ ë˜ì–´ë²„ë¦¼
+        // 3í•­ ì—°ì‚°ì : (ì¡°ê±´) ? (trueì¼ ë•Œ ê°’) : (falseì¼ ë•Œ ê°’)
         float dirX = playerDir.x < 0 ? -1 : 1;
         float dirY = playerDir.x < 0 ? -1 : 1;
 
-        // switch - case : °ªÀÇ »êÅÂ¿¡ µû¶ó ·ÎÁ÷À» ³ª´²ÁÖ´Â Å°¿öµå
+        // switch - case : ê°’ì˜ ì‚°íƒœì— ë”°ë¼ ë¡œì§ì„ ë‚˜ëˆ ì£¼ëŠ” í‚¤ì›Œë“œ
         switch (transform.tag)
         {
             case "Ground":
-                // µÎ ObjectÀÇ °Å¸® Â÷ÀÌ¿¡¼­ XÃàÀÌ YÃàº¸´Ù Å©¸é ¼öÆò ÀÌµ¿
+                // ë‘ Objectì˜ ê±°ë¦¬ ì°¨ì´ì—ì„œ Xì¶•ì´ Yì¶•ë³´ë‹¤ í¬ë©´ ìˆ˜í‰ ì´ë™
                 if (diffX > diffY)
                 {
-                    // Translate : ÁöÁ¤µÈ °ª ¸¸Å­ ÇöÀç À§Ä¡¿¡¼­ ÀÌµ¿
+                    // Translate : ì§€ì •ëœ ê°’ ë§Œí¼ í˜„ì¬ ìœ„ì¹˜ì—ì„œ ì´ë™
                     transform.Translate(Vector3.right * dirX * 40);
                 }
 
-                // µÎ ObjectÀÇ °Å¸® Â÷ÀÌ¿¡¼­ XÃàÀÌ YÃàº¸´Ù ÀÛÀ¸¸é ¼öÁ÷ ÀÌµ¿
+                // ë‘ Objectì˜ ê±°ë¦¬ ì°¨ì´ì—ì„œ Xì¶•ì´ Yì¶•ë³´ë‹¤ ì‘ìœ¼ë©´ ìˆ˜ì§ ì´ë™
                 else if (diffX < diffY)
                 {
                     transform.Translate(Vector3.up * dirY * 40);

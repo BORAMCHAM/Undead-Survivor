@@ -1,71 +1,71 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-// MonoBeHaviour : °ÔÀÓ ·ÎÁ÷ ±¸¼º¿¡ ÇÊ¿äÇÑ °ÍµéÀ» °¡Áø Å¬·¡½º
+// MonoBeHaviour : ê²Œì„ ë¡œì§ êµ¬ì„±ì— í•„ìš”í•œ ê²ƒë“¤ì„ ê°€ì§„ í´ë˜ìŠ¤
 public class Player : MonoBehaviour 
 {
-    /* º¯¼ö ÀÌ¸§Àº µ¥ÀÌÅÍ°¡ Áö´Ñ ÀÇ¹Ì¸¦ ÆÄ¾ÇÇÒ ¼ö ÀÖµµ·Ï Áş±â */
-    public Vector2 inputVec;    // ÀÔ·Â °ªÀ» ÀúÀåÇÒ º¯¼ö ¼±¾ğ
-    public float speed;     // ¼Óµµ¸¦ Æí¸®ÇÏ°Ô °ü¸®ÇÏ´Â float º¯¼ö
+    /* ë³€ìˆ˜ ì´ë¦„ì€ ë°ì´í„°ê°€ ì§€ë‹Œ ì˜ë¯¸ë¥¼ íŒŒì•…í•  ìˆ˜ ìˆë„ë¡ ì§“ê¸° */
+    public Vector2 inputVec;    // ì…ë ¥ ê°’ì„ ì €ì¥í•  ë³€ìˆ˜ ì„ ì–¸
+    public float speed;     // ì†ë„ë¥¼ í¸ë¦¬í•˜ê²Œ ê´€ë¦¬í•˜ëŠ” float ë³€ìˆ˜
 
-    Rigidbody2D rigid;  // GameObjectÀÇ  Rigidbody 2D¸¦ ÀúÀåÇÒ º¯¼ö ¼±¾ğ
-    SpriteRenderer spriter;  // SpriteRenderer º¯¼ö ¼±¾ğ
-    Animator anim;  // Animator º¯¼ö ¼±¾ğ
+    Rigidbody2D rigid;  // GameObjectì˜  Rigidbody 2Dë¥¼ ì €ì¥í•  ë³€ìˆ˜ ì„ ì–¸
+    SpriteRenderer spriter;  // SpriteRenderer ë³€ìˆ˜ ì„ ì–¸
+    Animator anim;  // Animator ë³€ìˆ˜ ì„ ì–¸
 
-    // Awake : ½ÃÀÛÇÒ ¶§ ÇÑ¹ø¸¸ ½ÇÇàµÇ´Â »ı¸íÁÖ±â ÇÔ¼ö (¼±¾ğÇÑ º¯¼ö¸¦ ÃÊ±âÈ­ ÇÏ´Â °÷)
+    // Awake : ì‹œì‘í•  ë•Œ í•œë²ˆë§Œ ì‹¤í–‰ë˜ëŠ” ìƒëª…ì£¼ê¸° í•¨ìˆ˜ (ì„ ì–¸í•œ ë³€ìˆ˜ë¥¼ ì´ˆê¸°í™” í•˜ëŠ” ê³³)
     void Awake()
     {
-        // GetComponent<T> : GameObject¿¡¼­ Component¸¦ °¡Á®¿À´Â ÇÔ¼ö ¡æ TÀÚ¸®¿¡´Â Component ÀÌ¸§ ÀÛ¼º
-        rigid = GetComponent<Rigidbody2D>();    // rigid º¯¼ö¿¡ Player¿¡ ÀÖ´Â Component Áß Rigidbody 2D ÀúÀå
+        // GetComponent<T> : GameObjectì—ì„œ Componentë¥¼ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜ â†’ Tìë¦¬ì—ëŠ” Component ì´ë¦„ ì‘ì„±
+        rigid = GetComponent<Rigidbody2D>();    // rigid ë³€ìˆ˜ì— Playerì— ìˆëŠ” Component ì¤‘ Rigidbody 2D ì €ì¥
         spriter = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
     }
 
-    // FixedUpdate : ¹°¸® ¿¬»ê ÇÁ·¹ÀÓ¸¶´Ù È£ÃâµÇ´Â »ı¸íÁÖ±â ÇÔ¼ö
+    // FixedUpdate : ë¬¼ë¦¬ ì—°ì‚° í”„ë ˆì„ë§ˆë‹¤ í˜¸ì¶œë˜ëŠ” ìƒëª…ì£¼ê¸° í•¨ìˆ˜
     void FixedUpdate()
     {
         /*
-        - ¹°¸®ÀÌµ¿ Ã¹¹øÂ° : ÈûÀ» ÁØ´Ù ( = AddForce)
-        rigid.AddForce(inputVec);   // ¹æÇâ Å©±â¸¦ ÁÜ
+        - ë¬¼ë¦¬ì´ë™ ì²«ë²ˆì§¸ : í˜ì„ ì¤€ë‹¤ ( = AddForce)
+        rigid.AddForce(inputVec);   // ë°©í–¥ í¬ê¸°ë¥¼ ì¤Œ
 
-        - ¹°¸®ÀÌµ¿ µÎ¹øÂ° : ¼Óµµ¸¦ Á÷Á¢ Á¦¾îÇÑ´Ù ( = Velocity)
-        rigid.velocity = inputVec;  // Velocity : ¹°¸®ÀûÀÎ ¼Óµµ¸¦ ÀÇ¹Ì
+        - ë¬¼ë¦¬ì´ë™ ë‘ë²ˆì§¸ : ì†ë„ë¥¼ ì§ì ‘ ì œì–´í•œë‹¤ ( = Velocity)
+        rigid.velocity = inputVec;  // Velocity : ë¬¼ë¦¬ì ì¸ ì†ë„ë¥¼ ì˜ë¯¸
 
-        - ¹°¸®ÀÌµ¿ ¼¼¹øÂ° : À§Ä¡¸¦ ¿Å±ä´Ù ( = MovePosition)
+        - ë¬¼ë¦¬ì´ë™ ì„¸ë²ˆì§¸ : ìœ„ì¹˜ë¥¼ ì˜®ê¸´ë‹¤ ( = MovePosition)
         rigid.MovePosition(rigid.position + inputVec);
         */
 
-        // ´Ù¸¥ ÇÁ·¹ÀÓ È¯°æ¿¡µµ ÀÌµ¿°Å¸®´Â °°¾Æ¾ß ÇÔ
-        // normalized : º¤ÅÍ °ªÀÇ Å©±â°¡ 1ÀÌ µÇµµ·Ï ÁÂÇ¥°¡ ¼öÁ¤µÈ °ª
-        // fixedDeltaTime : ¹°¸® ÇÁ·¹ÀÓ ÇÏ³ª°¡ ¼ÒºñÇÏ´Â ½Ã°£
+        // ë‹¤ë¥¸ í”„ë ˆì„ í™˜ê²½ì—ë„ ì´ë™ê±°ë¦¬ëŠ” ê°™ì•„ì•¼ í•¨
+        // normalized : ë²¡í„° ê°’ì˜ í¬ê¸°ê°€ 1ì´ ë˜ë„ë¡ ì¢Œí‘œê°€ ìˆ˜ì •ëœ ê°’
+        // fixedDeltaTime : ë¬¼ë¦¬ í”„ë ˆì„ í•˜ë‚˜ê°€ ì†Œë¹„í•˜ëŠ” ì‹œê°„
         Vector2 nextVec = inputVec * speed * Time.fixedDeltaTime;
 
-        // ¹°¸®ÀÌµ¿ Áß À§Ä¡ÀÌµ¿
-        // MovePositionÀº À§Ä¡ÀÌµ¿ÀÌ¶ó ÇöÀç À§Ä¡(rigid.position)µµ ´õÇØÁÖ¾î¾ß ÇÔ
-        // À§¿¡¼­ °è»êµÈ º¯¼ö(nextVec)¸¦ MovePosition¿¡ »ç¿ë
+        // ë¬¼ë¦¬ì´ë™ ì¤‘ ìœ„ì¹˜ì´ë™
+        // MovePositionì€ ìœ„ì¹˜ì´ë™ì´ë¼ í˜„ì¬ ìœ„ì¹˜(rigid.position)ë„ ë”í•´ì£¼ì–´ì•¼ í•¨
+        // ìœ„ì—ì„œ ê³„ì‚°ëœ ë³€ìˆ˜(nextVec)ë¥¼ MovePositionì— ì‚¬ìš©
         rigid.MovePosition(rigid.position + nextVec);  
     }
 
     void OnMove(InputValue value)
     {
-        // Get<T> : ÇÁ·ÎÇÊ¿¡¼­ ¼³Á¤ÇÑ ÄÁÆ®·Ñ Å¸ÀÔ T°ªÀ» °¡Á®¿À´Â ÇÔ¼ö
+        // Get<T> : í”„ë¡œí•„ì—ì„œ ì„¤ì •í•œ ì»¨íŠ¸ë¡¤ íƒ€ì… Tê°’ì„ ê°€ì ¸ì˜¤ëŠ” í•¨ìˆ˜
         inputVec = value.Get<Vector2>();
     }
 
-    // LateUpdate : ÇÁ·¹ÀÓÀÌ Á¾·á µÇ±â Àü ½ÇÇàµÇ´Â »ı¸íÁÖ±â ÇÔ¼ö
+    // LateUpdate : í”„ë ˆì„ì´ ì¢…ë£Œ ë˜ê¸° ì „ ì‹¤í–‰ë˜ëŠ” ìƒëª…ì£¼ê¸° í•¨ìˆ˜
     void LateUpdate()
     {
-        // ¾Ö´Ï¸ŞÀÌÅÍ¿¡¼­ ¼³Á¤ÇÑ ÆÄ¶ó¸ŞÅÍ Å¸ÀÔ°ú µ¿ÀÏÇÑ ÇÔ¼ö ÀÛ¼º
-        // SetFloat Ã¹¹øÂ° ÀÎÀÚ : ÆÄ¶ó¸ŞÅÍ ÀÌ¸§, SetFloat µÎ¹øÂ° ÀÎÀÚ : ¹İ¿µÇÒ float °ª
-        anim.SetFloat("Speed", inputVec.magnitude);  // Magnitude : º¤ÅÍÀÇ ¼ø¼öÇÑ Å©±â °ª
+        // ì• ë‹ˆë©”ì´í„°ì—ì„œ ì„¤ì •í•œ íŒŒë¼ë©”í„° íƒ€ì…ê³¼ ë™ì¼í•œ í•¨ìˆ˜ ì‘ì„±
+        // SetFloat ì²«ë²ˆì§¸ ì¸ì : íŒŒë¼ë©”í„° ì´ë¦„, SetFloat ë‘ë²ˆì§¸ ì¸ì : ë°˜ì˜í•  float ê°’
+        anim.SetFloat("Speed", inputVec.magnitude);  // Magnitude : ë²¡í„°ì˜ ìˆœìˆ˜í•œ í¬ê¸° ê°’
 
-        // if : Á¶°ÇÀÌ trueÀÏ ¶§, ÀÚ½ÅÀÇ ÄÚµå¸¦ ½ÇÇàÇÏ´Â Å°¿öµå
-        if (inputVec.x != 0)    // != : '¿ŞÂÊ°ú ¿À¸¥ÂÊÀÌ ¼­·Î ´Ù¸¨´Ï±î?' ÀÇ¹ÌÀÇ ºñ±³ ¿¬»êÀÚ
+        // if : ì¡°ê±´ì´ trueì¼ ë•Œ, ìì‹ ì˜ ì½”ë“œë¥¼ ì‹¤í–‰í•˜ëŠ” í‚¤ì›Œë“œ
+        if (inputVec.x != 0)    // != : 'ì™¼ìª½ê³¼ ì˜¤ë¥¸ìª½ì´ ì„œë¡œ ë‹¤ë¦…ë‹ˆê¹Œ?' ì˜ë¯¸ì˜ ë¹„êµ ì—°ì‚°ì
         {
-            // if¹® ¾È¿¡ flipX ¼Ó¼º ¹Ù²Ù±â
-            spriter.flipX = inputVec.x < 0;    // ºñ±³ ¿¬»êÀÚÀÇ °á°ú¸¦ ¹Ù·Î ³ÖÀ» ¼ö ÀÖÀ½
+            // ifë¬¸ ì•ˆì— flipX ì†ì„± ë°”ê¾¸ê¸°
+            spriter.flipX = inputVec.x < 0;    // ë¹„êµ ì—°ì‚°ìì˜ ê²°ê³¼ë¥¼ ë°”ë¡œ ë„£ì„ ìˆ˜ ìˆìŒ
         }
     }
 }
