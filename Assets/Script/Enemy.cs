@@ -56,5 +56,12 @@ public class Enemy : MonoBehaviour
         // 목표의 X축 값과 자신의 X축 값을 비교하여 작으면 true가 되도록 설정
         spriter.flipX = target.position.x < rigid.position.x;
     }
+
+    // OnEnable : 스크립트가 활성화 될 때, 호출되는 이벤트 함수
+    void OnEnable()
+    {
+        // OnEnable에서 타겟 변수에 GameManager를 활용하여 player 할당
+        target = GameManager.instance.player.GetComponent<Rigidbody2D>();
+    }
 }
 

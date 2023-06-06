@@ -10,6 +10,8 @@ public class GameManager : MonoBehaviour
         - 정적(static) 변수는 즉시 클래스에서 부를 수 있다는 편리함이 있음
     */
     public static GameManager instance;
+    // 다양한 곳에서 쉽게 접근할 수 있도록 GameManager에 PoolManager 추가
+    public PoolManager pool;
     public Player player;   // Player 타입의 공개 변수 선언
 
     void Awake()
