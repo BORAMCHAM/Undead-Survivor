@@ -6,15 +6,23 @@ public class Enemy : MonoBehaviour
 {
     // 속도 변수 선언
     public float speed;
+    // 체력 변수 선언 (현재의 체력)
+    public float health;
+    // 최대 체력 변수 선언
+    public float maxHealth;
+    // RuntimeAnimatorController 변수 선언
+    public RuntimeAnimatorController[] animCon;
     // target을 물리적으로 따라갈 것이기 때문에 Rigidbody2D 변수 선언
     public Rigidbody2D target;
 
     // 몬스터가 살아있는지 죽어있는지 구별해주는 변수 선언
     // 아직 테스트 상태이미로 미리 isLive = true 적용해주기
-    bool isLive = true;
+    bool isLive;
 
     // Rigidbody 2D를 위한 변수 선언
     Rigidbody2D rigid;
+    // 애니메이터 변수 선언
+    Animator anim;
     // SpriteRenderer를 위한 변수 선언
     SpriteRenderer spriter;
 
@@ -22,6 +30,7 @@ public class Enemy : MonoBehaviour
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
         spriter = GetComponent<SpriteRenderer>();
     }
 
@@ -62,6 +71,20 @@ public class Enemy : MonoBehaviour
     {
         // OnEnable에서 타겟 변수에 GameManager를 활용하여 player 할당
         target = GameManager.instance.player.GetComponent<Rigidbody2D>();
+        // 생존여부와 체력 초기화
+        isLive = true;
+        health = maxHealth;
+    }
+
+    /* 초기 속성을 적용하는 함수 추가 */
+    // 매개변수 : 소환데이터
+    public void Init(SpawnData data)
+    {
+        // 매개변수의 속성을 몬스터 속성 변경에 활용하기
+        anim.runtimeAnimatorController = animCon[data.spriteType];
+        speed = data.speed;
+        maxHealth = data.health;
+        health = data.health;
     }
 }
 
